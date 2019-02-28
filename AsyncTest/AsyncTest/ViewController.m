@@ -14,37 +14,33 @@
 @end
 
 @implementation ViewController{
-    bool stressTestLoop;
-    dispatch_queue_t stressTestQueue;
+    bool isStressTestLoop;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-
-
-    stressTestQueue = NULL;
-    stressTestLoop = false;
+    isStressTestLoop = false;
 }
 
 - (IBAction)onButton:(id)sender {
-    if(stressTestQueue){
+    if(isStressTestLoop){
         [self.buttonRun setTitle:@"WAIT..." forState:UIControlStateNormal];
-        stressTestLoop = false;
+        [self.buttonRun setEnabled:FALSE];
+        isStressTestLoop = false;
         return;
     }
     [self.buttonRun setTitle:@"STOP" forState:UIControlStateNormal];
-    stressTestQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    stressTestLoop = true;
-    dispatch_async(stressTestQueue, ^(void) {
-        while(stressTestLoop){
+    isStressTestLoop = true;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+        while(self->isStressTestLoop){
             NSLog(@"test");
             [NSThread sleepForTimeInterval:3.0];
         }
         dispatch_async(dispatch_get_main_queue(), ^(void){
             [self.buttonRun setTitle:@"START" forState:UIControlStateNormal];
+            [self.buttonRun setEnabled:TRUE];
         });
-        stressTestQueue = NULL;
     });
 }
 
