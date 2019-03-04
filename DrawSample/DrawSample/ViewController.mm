@@ -60,8 +60,12 @@ https://qiita.com/y_matsuwitter/items/e93fffea4c9ba9e5d15a
 
     //  画像
     static int x = 0;
-    x++;
-    [alpaca drawInRect:CGRectMake(x % 500,0,alpaca.size.width,alpaca.size.height)];
+    x--;
+    auto rect = CGRectMake(x % 500,0,alpaca.size.width,alpaca.size.height);
+    [alpaca drawInRect:rect];
+//    CGContextScaleCTM(context , 1.0f, -1.0);
+//    CGContextDrawImage(context,rect,alpaca.CGImage);
+//    CGContextScaleCTM(context , 1, 1);
 
     //  FillRect
     CGContextSetRGBFillColor(context, 1.0,0.0,0.0,0.5);

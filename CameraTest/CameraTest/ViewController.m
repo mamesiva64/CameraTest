@@ -30,6 +30,7 @@
 - (IBAction)onPhotoCamera:(id)sender {
 }
 
+
 UIImage* imageTransform(UIImage* image,float rotate)
 {
     CGSize imgSize = {image.size.width, image.size.height};
@@ -38,7 +39,7 @@ UIImage* imageTransform(UIImage* image,float rotate)
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     CGContextTranslateCTM(context, image.size.width/2, image.size.height/2);
-    CGContextScaleCTM(context, 1.0, -1.0);
+//    CGContextScaleCTM(context, 1.0, -1.0);
     float radian = rotate * M_PI / 180;
     CGContextRotateCTM(context, radian);
     CGContextDrawImage(context,
